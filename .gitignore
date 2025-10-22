@@ -1,0 +1,37 @@
+# Gradle
+.gradle/
+build/
+out/
+*.jar
+!artifacts/app-ibank-build-for-testers.jar
+
+# IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temp files
+*.tmp
+*.temp
+
+# Selenide reports
+build/reports/tests/
+build/test-results/
+
+# Local configuration
+*.properties
