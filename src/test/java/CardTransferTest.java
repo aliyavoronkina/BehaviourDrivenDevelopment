@@ -10,9 +10,30 @@ public class CardTransferTest {
 
     @BeforeAll
     public static void setupAll() {
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1366x768";
-        Configuration.timeout = 10000;
+        // Настройки для CI среды
+        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            Configuration.browser = "chrome";
+            Configuration.browserSize = "1366x768";
+            Configuration.timeout = 10000;
+            // Решение для проблемы с user data directory в CI
+            Configuration.headless = true;
+            Configuration.browserCapabilities.setCapability("goog:chromeOptions",
+                    java.util.Map.of(
+                            "args", java.util.List.of(
+                                    "--no-sandbox",
+                                    "--disable-dev-shm-usage",
+                                    "--disable-gpu",
+                                    "--remote-allow-origins=*",
+                                    "--window-size=1366,768"
+                            )
+                    )
+            );
+        } else {
+            // Настройки для локальной разработки
+            Configuration.browser = "chrome";
+            Configuration.browserSize = "1366x768";
+            Configuration.timeout = 10000;
+        }
     }
 
     @BeforeEach
