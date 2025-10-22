@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,11 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardTransferTest {
 
+    @BeforeAll
+    public static void setupAll() {
+        Configuration.browser = "chrome";
+        Configuration.browserSize = "1366x768";
+        Configuration.timeout = 10000;
+    }
+
     @BeforeEach
     void setup() {
-        Configuration.browser = "chrome";
-        Configuration.headless = false;
-        Configuration.browserSize = "1366x768";
         open("http://localhost:9999");
     }
 
