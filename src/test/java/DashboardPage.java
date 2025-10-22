@@ -1,5 +1,5 @@
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -10,7 +10,7 @@ public class DashboardPage {
 
     public int getCardBalance(String cardNumber) {
         String last4Digits = cardNumber.substring(15);
-        var text = cards.findBy(Condition.text(last4Digits)).text();
+        var text = cards.findBy(com.codeborne.selenide.Condition.text(last4Digits)).text();
         return extractBalance(text);
     }
 
@@ -24,7 +24,7 @@ public class DashboardPage {
 
     public TransferPage selectCardToTransfer(String cardNumber) {
         String last4Digits = cardNumber.substring(15);
-        cards.findBy(Condition.text(last4Digits)).$("button").click();
+        cards.findBy(com.codeborne.selenide.Condition.text(last4Digits)).$("button").click();
         return new TransferPage();
     }
 }

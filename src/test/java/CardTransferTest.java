@@ -9,8 +9,8 @@ public class CardTransferTest {
 
     @BeforeEach
     void setup() {
-        Configuration.headless = false; // ВРЕМЕННО ОТКЛЮЧИТЬ HEADLESS
         Configuration.browser = "chrome";
+        Configuration.headless = false;
         Configuration.browserSize = "1366x768";
         open("http://localhost:9999");
     }
@@ -42,5 +42,19 @@ public class CardTransferTest {
 
         assertEquals(firstCardBalanceBefore - transferAmount, firstCardBalanceAfter);
         assertEquals(secondCardBalanceBefore + transferAmount, secondCardBalanceAfter);
+    }
+
+    @Test
+    void shouldNotTransferMoreThanBalance() {
+        DashboardPage dashboardPage = login();
+
+        DataHelper.CardInfo firstCard = DataHelper.getFirstCard();
+        DataHelper.CardInfo secondCard = DataHelper.getSecondCard();
+
+        int firstCardBalanceBefore = dashboardPage.getCardBalance(firstCard.getNumber());
+
+        int transferAmount = firstCardBalanceBefore + 5000;
+        TransferPage transferPage = dashboardPage.selectCardToTransfer(secondCard.getNumber());
+        transferPage.makeInvalidTransfer(String.valueOf(transferAmount), firstCard.getNumber());
     }
 }
