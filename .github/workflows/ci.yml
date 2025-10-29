@@ -13,5 +13,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew test -Dselenide.headless=true
