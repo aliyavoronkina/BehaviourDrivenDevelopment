@@ -7,6 +7,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class DashboardPage {
     private SelenideElement heading = $("[data-test-id=dashboard]");
+    private SelenideElement firstCard = $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0']");
+    private SelenideElement secondCard = $("[data-test-id='0f3f5c2a-249e-4c3d-8287-09f7a039391d']");
     private SelenideElement firstCardButton = $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0'] button");
     private SelenideElement secondCardButton = $("[data-test-id='0f3f5c2a-249e-4c3d-8287-09f7a039391d'] button");
 
@@ -14,8 +16,13 @@ public class DashboardPage {
         heading.shouldBe(visible);
     }
 
-    public int getCardBalance(String cardId) {
-        var text = $("[data-test-id='" + cardId + "']").getText();
+    public int getFirstCardBalance() {
+        var text = firstCard.getText();
+        return extractBalance(text);
+    }
+
+    public int getSecondCardBalance() {
+        var text = secondCard.getText();
         return extractBalance(text);
     }
 

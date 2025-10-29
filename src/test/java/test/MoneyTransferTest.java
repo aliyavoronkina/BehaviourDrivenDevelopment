@@ -18,12 +18,12 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var dashboardPage = verificationPage.validVerify("12345");
 
-        var firstCardBalance = dashboardPage.getCardBalance("92df3f1c-a033-48e6-8390-206f6b1f56c0");
-        var secondCardBalance = dashboardPage.getCardBalance("0f3f5c2a-249e-4c3d-8287-09f7a039391d");
+        int firstCardBalance = dashboardPage.getFirstCardBalance();
+        int secondCardBalance = dashboardPage.getSecondCardBalance();
 
-        var transferAmount = secondCardBalance / 2;
+        int amount = secondCardBalance / 2;
 
         var transferPage = dashboardPage.transferToFirstCard();
-        transferPage.makeTransfer(transferAmount, "5559 0000 0000 0002");
+        transferPage.makeTransfer(amount, "5559 0000 0000 0002");
     }
 }
