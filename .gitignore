@@ -2,8 +2,7 @@
 .gradle/
 build/
 out/
-*.jar
-!artifacts/app-ibank-build-for-testers.jar
+
 
 # IDEA
 .idea/
