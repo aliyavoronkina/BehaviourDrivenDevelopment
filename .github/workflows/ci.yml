@@ -20,5 +20,6 @@ jobs:
           java -jar app-ibank-build-for-testers.jar &
           sleep 10
 
-      - name: Run tests
-        run: gradle test -Dselenide.headless=true --info
+      - name: Run tests with system Gradle
+        run: |
+          GRADLE_OPTS="-Dorg.gradle.java.home=$JAVA_HOME" gradle test -Dselenide.headless=true --info
