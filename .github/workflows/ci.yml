@@ -23,4 +23,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests with detailed info
-        run: ./gradlew test -Dselenide.headless=true --info
+        run: gradle test -Dselenide.headless=true --info
