@@ -1,29 +1,37 @@
 package test;
 
 import data.AuthInfo;
+import data.DataHelper;
 import page.DashboardPage;
 import page.LoginPage;
+import page.TransferPage;
+import page.VerificationPage;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
 
     @Test
     void shouldTransferMoneyFromSecondToFirst() {
-        open("http://localhost:9999");
-
-        var loginPage = new LoginPage();
-        var authInfo = new AuthInfo("vasya", "qwerty123");
+        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
-        var dashboardPage = verificationPage.validVerify("12345");
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
 
-        int firstCardBalance = dashboardPage.getFirstCardBalance();
-        int secondCardBalance = dashboardPage.getSecondCardBalance();
-
-        int amount = secondCardBalance / 2;
+        var firstCardBalance = dashboardPage.getFirstCardBalance();
+        var secondCardBalance = dashboardPage.getSecondCardBalance();
 
         var transferPage = dashboardPage.transferToFirstCard();
-        transferPage.makeTransfer(amount, "5559 0000 0000 0002");
+        int amount = 1000;
+        transferPage.makeTransfer(amount, DataHelper.getOtherAuthInfo().getLogin());
+
+        var expectedFirstCardBalance = firstCardBalance + amount;
+        var expectedSecondCardBalance = secondCardBalance - amount;
+
+        assertEquals(expectedFirstCardBalance, dashboardPage.getFirstCardBalance());
+        assertEquals(expectedSecondCardBalance, dashboardPage.getSecondCardBalance());
     }
 }
