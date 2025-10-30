@@ -19,5 +19,8 @@ jobs:
       - name: Run application
         run: java -jar app-ibank-build-for-testers.jar &
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Run tests with detailed info
-        run: gradle test -Dselenide.headless=true --info
+        run: ./gradlew test -Dselenide.headless=true --info
