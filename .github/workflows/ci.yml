@@ -14,13 +14,14 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: '7.6.4'
 
       - name: Run application
         run: java -jar app-ibank-build-for-testers.jar &
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
 
       - name: Run tests with detailed info
         run: gradle test -Dselenide.headless=true --info
